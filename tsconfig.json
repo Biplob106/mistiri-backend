@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    // File Layout
+    "rootDir": "./src",
+    "outDir": "./dist",
+
+    // Environment
+    "module": "commonjs",
+    "target": "es2020",
+    "lib": ["es2020"],
+    "types": ["node"],
+    "moduleResolution": "node",
+
+    // Interop
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+
+    // Outputs
+    "sourceMap": true,
+
+    // Type checking
+    "strict": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true
+  }
+}

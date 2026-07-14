@@ -52,3 +52,31 @@ export const getMyRepairs = async (
     res.status(500).json({ message: "Server error" });
   }
 };
+// একটা নির্দিষ্ট repair request দেখা (শুধু নিজের টা)
+export const getRepairById = async (
+  req: AuthRequest,
+  res: Response
+): Promise<void> => {
+  try {
+    const repair = await RepairRequest.findById(req.params.id).populate(
+      "customer",
+      "name email"
+    );
+
+    if (!repair) {
+      res.status(404).json({ message: "Repair request not found" });
+      return;
+    }
+
+    // ownership check — এই request কি সত্যিই এই user-এর?
+    if (repair.customer._id.toString() !== req.user?.id) {
+      res.status(403).json({ message: "Not authorized to view this request" });
+      return;
+    }
+
+    res.status(200).json({ repair });
+  } catch (error) {
+    console.error("Get repair error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};

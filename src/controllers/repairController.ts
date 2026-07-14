@@ -8,6 +8,7 @@ export const createRepair = async (
   res: Response
 ): Promise<void> => {
   try {
+    // multipart/form-data-এ text field গুলো req.body-তেই আসে
     const { title, category, description, location, priority } = req.body;
 
     if (!title || !category || !description || !location) {
@@ -24,6 +25,9 @@ export const createRepair = async (
       description,
       location,
       priority: priority || "medium",
+      // ছবি upload হলে multer req.file বসায়; req.file.path = Cloudinary-র URL।
+      // ছবি না দিলে undefined থাকে, তাই image field খালিই থাকে।
+      image: req.file?.path,
     });
 
     res.status(201).json({

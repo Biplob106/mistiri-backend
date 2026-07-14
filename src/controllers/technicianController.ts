@@ -21,12 +21,19 @@ export const upsertProfile = async (
       return;
     }
 
+    // skill/area গুলো ছোট হাতের করে trim করে রাখি — তাই search/matching
+    // ধারাবাহিক হয় (schema-র lowercase array element-এ কাজ করে না, তাই এখানে করি)
+    const normSkills = (skills as string[]).map((s) => s.trim().toLowerCase());
+    const normAreas = (serviceAreas as string[]).map((a) =>
+      a.trim().toLowerCase()
+    );
+
     const profile = await Technician.findOneAndUpdate(
       { user: req.user?.id }, // token থেকে পাওয়া user-এর profile
       {
         user: req.user?.id,
-        skills,
-        serviceAreas,
+        skills: normSkills,
+        serviceAreas: normAreas,
         experience: experience ?? 0,
         bio,
         hourlyRate,

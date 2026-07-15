@@ -6,6 +6,7 @@ import authRoutes from "./routes/authRoutes";   // ← নতুন
 import repairRoutes from "./routes/repairRoutes";
 import technicianRoutes from "./routes/technicianRoutes";
 import bookingRoutes from "./routes/bookingRoutes";
+import analyticsRoutes from "./routes/analyticsRoutes";
 
 dotenv.config();
 connectDB();
@@ -23,6 +24,7 @@ app.use("/api/auth", authRoutes);   // ← নতুন
 app.use("/api/repairs", repairRoutes);
 app.use("/api/technicians", technicianRoutes);
 app.use("/api/bookings", bookingRoutes);
+app.use("/api/analytics", analyticsRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

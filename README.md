@@ -8,6 +8,21 @@ REST API for **Mistiri**, a smart home-maintenance platform. A customer writes a
 
 ---
 
+## 🏠 প্রজেক্ট পরিচিতি (Bangla)
+
+**Mistiri** একটি স্মার্ট হোম-মেইনটেন্যান্স প্ল্যাটফর্ম। ব্যবহারকারী ঘরের কোনো সমস্যা
+(AC, electrical বা plumbing) নিজের ভাষায় লেখেন → সঙ্গে সঙ্গে সম্ভাব্য কারণ ও
+আনুমানিক খরচের ধারণা পান → এলাকা ও দক্ষতা অনুযায়ী উপযুক্ত মিস্ত্রি খুঁজে booking
+দেন → কাজের অবস্থা track করেন → শেষে রিভিউ দেন।
+
+এই repo-টি হলো **backend API** — Express + TypeScript + MongoDB দিয়ে তৈরি।
+এখানে থাকে authentication (JWT ও Google), repair request ও নিয়ম-ভিত্তিক
+diagnosis, technician profile ও matching, booking ও review, এবং analytics।
+তিন ধরনের ব্যবহারকারী — **গ্রাহক**, **মিস্ত্রি** ও **অ্যাডমিন** — প্রত্যেকের জন্য
+আলাদা সুবিধা ও নিরাপত্তা (role-based access)।
+
+---
+
 ## Tech Stack
 
 - **Node.js + Express 5** (TypeScript)

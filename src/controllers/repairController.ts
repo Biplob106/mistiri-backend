@@ -43,9 +43,9 @@ export const createRepair = async (
       description,
       location,
       priority: priority || "medium",
-      // ছবি upload হলে multer req.file বসায়; req.file.path = Cloudinary-র URL।
-      // ছবি না দিলে undefined থাকে, তাই image field খালিই থাকে।
-      image: req.file?.path,
+      // ছবি upload হলে multer req.file বসায় (req.file.path = Cloudinary URL);
+      // file না দিলে body-তে সরাসরি image URL এলে সেটা নিই — নাহলে খালি থাকে।
+      image: req.file?.path || req.body.image,
       // auto-diagnosis-এর ফলাফল (ম্যাচ না পেলে undefined থাকে, field খালি)
       diagnosis,
       estimatedCost,
@@ -103,6 +103,35 @@ export const getRepairById = async (
     res.status(200).json({ repair });
   } catch (error) {
     console.error("Get repair error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// customer নিজের request মুছে দেয় (manage page থেকে)
+export const deleteRepair = async (
+  req: AuthRequest,
+  res: Response
+): Promise<void> => {
+  try {
+    const repair = await RepairRequest.findById(req.params.id);
+
+    if (!repair) {
+      res.status(404).json({ message: "Repair request not found" });
+      return;
+    }
+
+    // ownership check — শুধু নিজের request-ই মুছতে পারবে
+    if (repair.customer.toString() !== req.user?.id) {
+      res
+        .status(403)
+        .json({ message: "Not authorized to delete this request" });
+      return;
+    }
+
+    await repair.deleteOne();
+    res.status(200).json({ message: "Repair request deleted" });
+  } catch (error) {
+    console.error("Delete repair error:", error);
     res.status(500).json({ message: "Server error" });
   }
 };

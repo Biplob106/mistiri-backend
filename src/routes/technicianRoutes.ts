@@ -18,8 +18,8 @@ router.get("/me", protect, authorize("technician"), getMyProfile);
 // নোট: এই route "/:id"-এর আগে থাকতে হবে, নাহলে "match" কে id ধরে নেবে
 router.get("/match/:repairId", protect, matchTechnicians);
 
-// list + filter — যেকোনো logged-in user দেখতে পারে
-router.get("/", protect, listTechnicians);
-router.get("/:id", protect, getTechnicianById);
+// list + filter এবং একজনের details — public (explore ও details page যে কেউ দেখে)
+router.get("/", listTechnicians);
+router.get("/:id", getTechnicianById);
 
 export default router;

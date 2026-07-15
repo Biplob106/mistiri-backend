@@ -7,6 +7,7 @@ import repairRoutes from "./routes/repairRoutes";
 import technicianRoutes from "./routes/technicianRoutes";
 import bookingRoutes from "./routes/bookingRoutes";
 import analyticsRoutes from "./routes/analyticsRoutes";
+import adminRoutes from "./routes/adminRoutes";
 
 dotenv.config();
 connectDB();
@@ -25,6 +26,7 @@ app.use("/api/repairs", repairRoutes);
 app.use("/api/technicians", technicianRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/analytics", analyticsRoutes);
+app.use("/api/admin", adminRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

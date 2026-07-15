@@ -7,7 +7,8 @@
     "dev": "tsx watch src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "seed": "tsx src/seed/aiKnowledgeSeed.ts"
+    "seed": "tsx src/seed/aiKnowledgeSeed.ts",
+    "seed:demo": "tsx src/seed/demoSeed.ts"
   },
   "engines": {
     "node": ">=20"

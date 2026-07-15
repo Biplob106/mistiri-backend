@@ -1,6 +1,7 @@
 import { Response } from "express";
 import { User } from "../models/User";
 import { Technician } from "../models/Technician";
+import { Booking } from "../models/Booking";
 import { AuthRequest } from "../middleware/auth";
 
 // admin সব user দেখে (password ছাড়া), নতুন আগে
@@ -64,6 +65,24 @@ export const getAllTechnicians = async (
     res.status(200).json({ technicians });
   } catch (error) {
     console.error("Get all technicians error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// admin পুরো platform-এর সব booking দেখে (repair/customer/technician সহ)
+export const getAllBookings = async (
+  req: AuthRequest,
+  res: Response
+): Promise<void> => {
+  try {
+    const bookings = await Booking.find()
+      .populate("repair", "title category location status")
+      .populate("customer", "name email")
+      .populate("technician", "name email")
+      .sort({ createdAt: -1 });
+    res.status(200).json({ bookings });
+  } catch (error) {
+    console.error("Get all bookings error:", error);
     res.status(500).json({ message: "Server error" });
   }
 };
